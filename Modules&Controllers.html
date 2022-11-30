@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<title>
+AngularJs with Modules and Controllers
+</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript">
+var app = angular.module('myApp', []);
+app.controller('personCtrl', function($scope) {
+ $scope.firstName = "";
+ $scope.lastName = "";
+ $scope.age=0;
+ $scope.agecal=function(){
+ if ($scope.age == 0)
+ return "";
+ else if ($scope.age < 18)
+ return "you are not eligible to join army";
+ else
+ return "you are eligible to join army ";
+ };
+ $scope.fullName = function() {
+ return $scope.firstName + " " + $scope.lastName+", "+$scope.agecal();
+ };
+});
+app.controller('personCtrl1', function($scope) {
+ $scope.height = 0;
+ $scope.weight = 0;
+ $scope.bmi=($scope.weight/($scope.height/100)**2).toFixed(2);//the_weight / (the_height/100)**2
+ $scope.bmimsg=function(){
+ if( ($scope.weight)<=0 && ($scope.height) <=0)
+ {
+ return $scope.bmi=""
+ }
+ else
+ {
+ if (($scope.weight/($scope.height/100)**2) <= 18.5) 
+ return "Oops! You are underweight.";
+ else if (($scope.weight/($scope.height/100)**2) <= 24.9) 
+ return "Awesome! You are healthy."; 
+else if (($scope.weight/($scope.height/100)**2) <= 29.9) 
+ return "Eee! You are over weight.";
+ else
+ return "Seesh! You are obese."; 
+ }
+ };
+ $scope.fullName1 = function() {
+ return ($scope.weight/($scope.height/100)**2).toFixed(2) + ", Your comment on BMI is : " + $scope.bmimsg();
+ };
+});
+</script>
+<body ng-app="myApp">
+<center><h2>AngularJs Program to find the eligibility to join Army and Bmi comments with 
+Controllers</h2></center><br><br>
+<div ng-controller="personCtrl">
+First Name: <input type="text" ng-model="firstName"><br><br>
+Last Name: <input type="text" ng-model="lastName"><br><br>
+age : <input type="text" ng-model="age"><br>
+<br>
+Message : Hello {{fullName()}} <br>
+</div>
+<div ng-controller="personCtrl1">
+<br>
+Enter the height in cm : <input type="text" ng-model="height"><br><br>
+Enter the weight in kg : <input type="text" ng-model="weight"><br><br>
+<br>
+BMI is: {{fullName1()}}
+</body>
+</html>
